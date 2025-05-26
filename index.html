@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head><title>My Chatbot</title></head>
+<body>
+  <h1>Talk to GPT for Free</h1>
+  <textarea id="input" placeholder="Type here..."></textarea><br>
+  <button onclick="send()">Send</button>
+  <p id="response">GPT will reply here</p>
+
+  <script>
+    async function send() {
+      const input = document.getElementById('input').value;
+      const res = await fetch('https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer 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',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({inputs: input})
+      });
+      const data = await res.json();
+      document.getElementById('response').textContent = data.generated_text || "No reply!";
+    }
+  </script>
+</body>
+</html>
